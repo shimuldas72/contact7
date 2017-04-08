@@ -19,7 +19,7 @@ $form_data = FormList::find()->where(['form_id'=>$form_id])->one();
 			$form = ActiveForm::begin([
                                 'id' => $form_id,
                                 'options'=>['class'=>'dynamic_form '.$form_data->form_class],
-                                'action' => ['/site/dynamic_form'],
+                                'action' => ['/'.$admin_module.'/submit/dynamic_form'],
                                 'fieldConfig' => [
                                     'template' => "{label}\n<div class=\"col-sm-10\">{input}\n{error}</div>",
                                 ],
@@ -42,7 +42,7 @@ $form_data = FormList::find()->where(['form_id'=>$form_id])->one();
 						?>
 							<div class="form-group">
 								<label class="control-label" for="<?= $value->field_key; ?>"><?= $value->label; ?></label>
-								<input type="text" id="<?= $value->field_key; ?>" class="form-control" name="Dynamicform[<?= $value->field_key; ?>]" >
+								<input type="text" id="<?= $value->field_key; ?>" class="form-control" name="Dynamicform[<?= $value->field_key; ?>]" placeholder="<?= $value->placeholder; ?>">
 								<div class="hint-block"><?= $value->hint; ?></div>
 								<div class="help-block"></div>
 							</div>
@@ -65,7 +65,7 @@ $form_data = FormList::find()->where(['form_id'=>$form_id])->one();
 						?>
 							<div class="form-group">
 								<label class="control-label" for="<?= $value->field_key; ?>"><?= $value->label; ?></label>
-								<textarea id="<?= $value->field_key; ?>" class="form-control" name="Dynamicform[<?= $value->field_key; ?>]" ></textarea>
+								<textarea id="<?= $value->field_key; ?>" class="form-control" name="Dynamicform[<?= $value->field_key; ?>]"  placeholder="<?= $value->placeholder; ?>"></textarea>
 								<div class="hint-block"><?= $value->hint; ?></div>
 								<div class="help-block"></div>
 							</div>
@@ -222,10 +222,57 @@ $form_data = FormList::find()->where(['form_id'=>$form_id])->one();
 
 
 <?php
-	$this->registerJsFile(\Yii::$app->urlManagerBackEnd->baseUrl."/resources/js/jquery.ui.widget.js", ['depends' => [\yii\web\JqueryAsset::className()]]); 
+	/*$this->registerJsFile(\Yii::$app->urlManagerBackEnd->baseUrl."/resources/js/jquery.ui.widget.js", ['depends' => [\yii\web\JqueryAsset::className()]]); 
     $this->registerJsFile(\Yii::$app->urlManagerBackEnd->baseUrl."/resources/js/jquery.iframe-transport.js", ['depends' => [\yii\web\JqueryAsset::className()]]); 
     $this->registerJsFile(\Yii::$app->urlManagerBackEnd->baseUrl."/resources/js/jquery.fileupload.js", ['depends' => [\yii\web\JqueryAsset::className()]]); 
     $this->registerJsFile(\Yii::$app->urlManagerBackEnd->baseUrl."/resources/js/jquery.fileupload-process.js", ['depends' => [\yii\web\JqueryAsset::className()]]); 
-    $this->registerJsFile(\Yii::$app->urlManagerBackEnd->baseUrl."/resources/js/jquery.fileupload-validate.js", ['depends' => [\yii\web\JqueryAsset::className()]]); 
+    $this->registerJsFile(\Yii::$app->urlManagerBackEnd->baseUrl."/resources/js/jquery.fileupload-validate.js", ['depends' => [\yii\web\JqueryAsset::className()]]); */
     
+?>
+
+
+<?php
+    $this->registerJs("
+
+        $(document).delegate('#".$form_id."', 'beforeSubmit', function(event, jqXHR, settings) {
+                        
+            var form = $(this);
+            var form_id = form.attr('id');
+
+            if(form.find('.has-error').length) {
+                return false;
+            }
+            
+            $.ajax({
+                    url: form.attr('action'),
+                    type: 'post',
+                    data: form.serialize(),
+                    beforeSend : function( request ){
+                        $('.success_wrapper_'+form_id).addClass('hide');
+                        $('.error_wrapper_'+form_id).addClass('hide');
+                    },
+                    success: function(data) {
+
+                        if(data.result=='success'){
+                            //form[0].reset();
+
+                            $('.success_wrapper_'+form_id).removeClass('hide');
+                            $('.error_wrapper_'+form_id).addClass('hide');
+                            
+                            $('.success_container_'+form_id).html(data.msg);
+                            $('.error_container_'+form_id).html('');
+                        }else{
+                            $('.error_container_'+form_id).html(data.msg);
+                            $('.success_container_'+form_id).html('');
+
+                            $('.success_wrapper_'+form_id).addClass('hide');
+                            $('.error_wrapper_'+form_id).removeClass('hide');
+                        }
+                    }
+            });
+            
+            return false;
+        });
+
+    ", yii\web\View::POS_READY, 'dynamic-form'.$form_id);
 ?>

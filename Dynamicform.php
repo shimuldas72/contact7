@@ -7,6 +7,7 @@
 	class Dynamicform extends Widget{
 		public $id;
 		public $form_id;
+		public $admin_module;
 
 		public function init(){
 			parent::init();
@@ -19,7 +20,7 @@
 
 		public function run(){
 
-			return $this->render('dynamicform',['id'=>$this->id,'form_id'=>$this->form_id]);
+			return $this->render('dynamicform',['id'=>$this->id,'form_id'=>$this->form_id,'admin_module'=>$this->admin_module]);
 		}
 	}
 
