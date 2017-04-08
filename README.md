@@ -12,6 +12,7 @@ Either run
 
 ```
 php composer.phar require --prefer-dist shimuldas72/yii2-contact7 "dev-master"
+```
 
 Or, you may add
 
