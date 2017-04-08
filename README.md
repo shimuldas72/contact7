@@ -22,8 +22,12 @@ Or, you may add
 
 to the require section of your `composer.json` file and execute `php composer.phar update`.
 
-### Install From the Archive
-
-Download the latest release from here [releases](https://github.com/shimuldas72/contact7), then extract it to your project.
-In your application config, add the path alias for this extension.
+For using it, just add 
+```
+<?php echo \shimuldas72\formwidget\Dynamicform::widget([ 'id'=>'mycustomid', 'form_id'=> 'created form id from admin','admin_module'=>'admin module name you added in config' ]); ?>
+```
+Example:
+```
+<?php echo \shimuldas72\formwidget\Dynamicform::widget([ 'id'=>'contact12345', 'form_id'=> 'contact-form','admin_module'=>'contact7' ]); ?>
+```
 
