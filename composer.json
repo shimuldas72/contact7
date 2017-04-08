@@ -15,11 +15,12 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "*"
+        "yiisoft/yii2": "*",
+        "shimuldas72/hello-world": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "HelloWorld": "contact7/"
+        "psr-4": {
+            "shimuldas72\\formwidget\\": ""
         }
     }
 }
