@@ -25,8 +25,8 @@ to the require section of your `composer.json` file and execute `php composer.ph
 For using it, just add 
 ```
 <?= \shimuldas72\formwidget\Dynamicform::widget([   'id'=>'mycustomid', 
-					'form_id'=> 'created form id from admin',
-					'admin_module'=>'admin module name you added in config' ]); ?>
+						'form_id'=> 'created form id from admin',
+						'admin_module'=>'admin module name you added in config' ]); ?>
 ```
 Example:
 ```
