@@ -1,22 +1,14 @@
 {
-    "name": "shimuldas72/yii2-contact7",
-    "description": "This is a test extension",
-    "type": "yii2-extension",
-    "keywords": ["yii2","extension"],
-    "license": "BSD-3-Clause",
+    "name": "shimuldas72/contact7",
     "authors": [
         {
-            "name": "Shimul Das",
-            "email": "shimuldas72@gmail.com"
+            "name": "shimuldas72"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {
-        "yiisoft/yii2": "*"
-    },
+    "require": {},
     "autoload": {
-        "psr-4": {
-            "shimul\\contact7\\": ""
+        "psr-0": {
+            "HelloWorld": "contact7/"
         }
     }
 }
