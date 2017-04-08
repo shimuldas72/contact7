@@ -22,6 +22,7 @@ Or, you may add
 
 to the require section of your `composer.json` file and execute `php composer.phar update`.
 
+
 For using it, add below code
 
 For admin panel:
@@ -37,8 +38,7 @@ In your app config file add
 
 The link for creating forms is yoursiteurl/contact7/forms
 
-And for displaying form in front 
-In your view file add
+And for displaying form in your view file add
 ```
 <?= \shimuldas72\formwidget\Dynamicform::widget([   'id'=>'mycustomid', 
 						'form_id'=> 'created form id from admin',
